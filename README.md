@@ -1,6 +1,6 @@
 # LOGIVER 
-## Nakliye şirketi için yapmış olduğum, açık kaynak uygulamam. Bilgi kaydetme, nakliye gününden önce bildirim alma, nakliye konumuna yol tarifi, müşteri arama, şirket kazanç gösterimi, yakıt masrafı hesaplama vb. özellikler içeriyor.
-## My open-source application developed for a shipping company. It includes features such as saving information, receiving notifications before the day of shipping, directions to the shipping location, customer calling, displaying company earnings, calculating fuel costs, etc.
+## Logiver, nakliye şirketlerine yönelik, kullanıcı dostu bir açık kaynak uygulamasıdır. Bu uygulama, nakliyat bilgilerini kaydetme, sevkiyat gününden önce bildirim gönderme, müşteri arama ve yol tarifi sağlama gibi özelliklerle, nakliye sürecini kolaylaştırmayı ve optimize etmeyi hedefler. Ayrıca, şirketin genel kazancını takip etme ve yakıt masraflarını hesaplama gibi finansal araçları da barındırır. Logiver, işlerinizi daha verimli ve sorunsuz hale getirmeniz için ideal bir çözümdür.
+## Logiver is a user-friendly, open-source application designed for transportation companies. This application aims to streamline and optimize the shipping process with features such as storing shipment information, sending notifications prior to the shipping day, customer search, and providing directions to the shipping location. In addition, it includes financial tools for tracking the company's overall earnings and calculating fuel costs. Logiver is the ideal solution for making your operations more efficient and seamless.
 
 <img src="https://github.com/alperdbs/logiver/assets/83196451/c078bb8e-f3bb-4157-af58-bc2fcfde8268" width="300">
 <img src="https://github.com/alperdbs/logiver/assets/83196451/2be2df27-7d97-4dac-be7f-0256ad3b8654" width="300">
