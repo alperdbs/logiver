@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    >
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button3"
+        android:fontFamily="@font/quicksand_bold"
+        android:text="Teslimatlar" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button3"
+        android:fontFamily="@font/quicksand_bold"
+        android:text="Yakıt Masrafı Hesapla" />
+
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/button3"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/quicksand_bold"
+        android:text="Hesap özeti"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/button4"
+        android:background="@drawable/button3"
+        android:layout_width="match_parent"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:fontFamily="@font/quicksand_bold"
+        android:layout_height="50dp"
+        android:text="Ayarlar"/>
+
+
+
+</LinearLayout>
