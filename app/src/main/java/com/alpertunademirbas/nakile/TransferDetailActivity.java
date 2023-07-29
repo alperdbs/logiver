@@ -44,10 +44,8 @@ public class TransferDetailActivity extends AppCompatActivity {
         transferDateView.setText(date);
         transferLocationView.setText(location);
         transferPriceView.setText(price);
-        // Karakter adını kullanarak uygun drawable'ı bulun
         int drawableResourceId = this.getResources().getIdentifier(character, "drawable", this.getPackageName());
 
-        // İlgili ImageView'ı güncelleyin
         characterImageView.setImageResource(drawableResourceId);
 
         call.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +64,7 @@ public class TransferDetailActivity extends AppCompatActivity {
         route.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + Uri.encode(location));  // Değişkeni burada kullanıyoruz.
+                Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + Uri.encode(location));
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
                 startActivity(mapIntent);

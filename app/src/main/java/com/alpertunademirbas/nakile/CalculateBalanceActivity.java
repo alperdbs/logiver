@@ -45,7 +45,6 @@ public class CalculateBalanceActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
         balanceTextView = findViewById(R.id.textViewTotal);
         pieChart = findViewById(R.id.pieChart);
-        //TextView textViewTotalTransfers = findViewById(R.id.textViewTotalTransfers);
         textViewMonth = findViewById(R.id.textViewMonth);
         textViewTotalTransferNumber = findViewById(R.id.textViewTotalTransferNumber);
         textViewSelectTransferName = findViewById(R.id.textViewSelectTransferName);
@@ -98,7 +97,7 @@ public class CalculateBalanceActivity extends AppCompatActivity {
 
             dialog.show();
         });
-        // PieChart ayarları
+
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
@@ -112,57 +111,47 @@ public class CalculateBalanceActivity extends AppCompatActivity {
         });
 
 
-
-
-        // Şu anki ayı al
         Calendar calendar = Calendar.getInstance();
-        int month = calendar.get(Calendar.MONTH) + 1; // Java Calendar sınıfı ayı 0-11 arasında döndürür, bu yüzden 1 ekliyoruz.
+        int month = calendar.get(Calendar.MONTH) + 1;
 
-        // Tüm transferleri al
         List<Transfer> transfers = dbHelper.getAllTransfers();
-
-        // Şu anki ayın transferlerini saklamak için bir liste oluşturun
         currentMonthTransfers = new ArrayList<>();
 
-        float totalTransferPrice = 0; // Şu anki ayın toplam transfer ücretini saklar
+        float totalTransferPrice = 0;
         for (Transfer transfer : transfers) {
-            String transferDate = transfer.getTransferDate(); // Transfer tarihini alır (formatı "dd/MM/yyyy" olmalıdır)
+            String transferDate = transfer.getTransferDate();
 
-            // Ayı al
             int transferMonth = Integer.parseInt(transferDate.split("/")[1]);
 
-            // Eğer transfer şu anki aya aitse, listeye ekle
             if (transferMonth == month) {
                 currentMonthTransfers.add(transfer);
-                totalTransferPrice += Float.parseFloat(transfer.getTransferPrice()); // Transfer ücretini toplam ücrete ekle
+                totalTransferPrice += Float.parseFloat(transfer.getTransferPrice());
             }
         }
 
-        // BalanceTextView'de geçerli ayı ve toplamı göster
-        monthName = new DateFormatSymbols().getMonths()[month-1]; // Ay adını al
+        monthName = new DateFormatSymbols().getMonths()[month-1];
         balanceTextView.setText(monthName + " Ayı Toplam Geliriniz " + totalTransferPrice + " TL");
 
-        // PieChart için PieEntry'ler oluştur
+
         List<PieEntry> entries = new ArrayList<>();
         for (Transfer transfer : currentMonthTransfers) {
-            float transferPrice = Float.parseFloat(transfer.getTransferPrice()); // Fiyatı al ve float'a çevir
-            entries.add(new PieEntry(transferPrice, transfer.getNameSurname())); // Ad ve soyadı açıklama olarak kullan
+            float transferPrice = Float.parseFloat(transfer.getTransferPrice());
+            entries.add(new PieEntry(transferPrice, transfer.getNameSurname()));
         }
 
-        // PieDataSet oluştur ve renkleri, metin boyutunu vb. ayarla
         PieDataSet set = new PieDataSet(entries, "Transfer Prices");
         set.setColors(ColorTemplate.COLORFUL_COLORS);
         set.setValueTextSize(14f);
 
-        // PieData oluştur ve PieChart'a ata
+
         PieData data = new PieData(set);
-        data.setValueTextColor(Color.WHITE); // PieChart içindeki değer yazılarının rengini beyaz yapar
+        data.setValueTextColor(Color.WHITE);
         pieChart.setData(data);
 
 
-        // PieChart ayarları
+
         pieChart.getDescription().setEnabled(false);
-        pieChart.getLegend().setEnabled(false); // Legend'ı devre dışı bırakır
+        pieChart.getLegend().setEnabled(false);
         pieChart.setHoleRadius(40f);
         pieChart.setTransparentCircleRadius(43f);
         pieChart.setDrawHoleEnabled(true);
@@ -171,19 +160,15 @@ public class CalculateBalanceActivity extends AppCompatActivity {
         pieChart.setTransparentCircleAlpha(110);
         pieChart.setCenterText("Transferler");
         pieChart.setCenterTextSize(18f);
-        pieChart.setEntryLabelColor(Color.WHITE); // PieChart içindeki etiket yazılarının rengini beyaz yapar
+        pieChart.setEntryLabelColor(Color.WHITE);
         pieChart.setEntryLabelTextSize(12f);
         pieChart.setUsePercentValues(true);
         data.setValueFormatter(new PercentFormatter(pieChart));
-
-        pieChart.setEntryLabelColor(Color.WHITE); // PieChart içindeki etiket yazılarının rengini beyaz yapar
-
-        // PieChart'ı güncelle
+        pieChart.setEntryLabelColor(Color.WHITE);
         pieChart.invalidate();
         int totalTransfers = currentMonthTransfers.size();
         textViewMonth.setText(monthName);
         textViewTotalTransferNumber.setText(String.valueOf(totalTransfers));
-        //textViewTotalTransfers.setText(monthName + " ayında toplam " + totalTransfers + " transfer yaptınız");
     }
 
 }

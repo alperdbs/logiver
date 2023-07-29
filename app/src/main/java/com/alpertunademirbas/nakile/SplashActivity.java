@@ -32,9 +32,7 @@ public class SplashActivity extends AppCompatActivity {
         window.setStatusBarColor(getResources().getColor(android.R.color.black));
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-
         final ImageView splashImage = findViewById(R.id.imageView);
-        // Büyütme animasyonunu
         ScaleAnimation scaleAnimation = new ScaleAnimation(
                 SCALE_FROM, SCALE_TO,
                 SCALE_FROM, SCALE_TO,
@@ -43,17 +41,13 @@ public class SplashActivity extends AppCompatActivity {
         );
         scaleAnimation.setFillAfter(true);
         scaleAnimation.setDuration(SPLASH_DURATION);
-
-        // ImageView'a animasyonu uygulama
         splashImage.startAnimation(scaleAnimation);
-
-        // Ana ekranı belirtilen süre sonunda aç
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent(SplashActivity.this, MainScreenActivity.class);
                 startActivity(intent);
-                finish(); // Bu Activity'i kapatın, böylece geri dönüşte tekrar splash ekranını görmeyiz.
+                finish();
             }
         }, SPLASH_DURATION);
 

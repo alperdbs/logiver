@@ -99,7 +99,6 @@ public class CalculateFuelPriceActivity extends AppCompatActivity {
                     textView4.setText(String.format("%.2f", Z));
 
                 } catch (NumberFormatException e) {
-                    // Kullanıcı geçerli bir sayı girmediyse, bir hata mesajı göster.
                     textView5.setVisibility(View.VISIBLE);
                 }
             }

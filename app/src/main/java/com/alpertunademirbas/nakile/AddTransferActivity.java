@@ -56,10 +56,6 @@ public class AddTransferActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_transfer);
         Window window = getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        //window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        //window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        //window.setStatusBarColor(getResources().getColor(android.R.color.black));
 
         Button addTransfer = findViewById(R.id.addTransfer);
         EditText nameView = findViewById(R.id.name);
@@ -92,14 +88,14 @@ public class AddTransferActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                phone = s.toString().replaceAll(" ", ""); // Remove spaces for character count
+                phone = s.toString().replaceAll(" ", "");
                 if (phone.length() > 10) {
-                    phone = phone.substring(0, 10); // Cut to 10 characters
+                    phone = phone.substring(0, 10);
                 }
 
                 String formattedPhone = formatPhoneNumber(phone);
                 if (!s.toString().equals(formattedPhone)) {
-                    phoneNumberView.removeTextChangedListener(this); // Loop avoid
+                    phoneNumberView.removeTextChangedListener(this);
                     phoneNumberView.setText(formattedPhone);
                     phoneNumberView.setSelection(formattedPhone.length());
                     phoneNumberView.addTextChangedListener(this);
@@ -149,13 +145,11 @@ public class AddTransferActivity extends AppCompatActivity {
 
                 if (isBatteryOptimizationEnabled()) {
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(AddTransferActivity.this); // YourActivity yerine mevcut activity adını yazınız
-                    builder.setTitle("Bildirimler için izin gerekli"); // Popup'ın başlığı
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddTransferActivity.this);
+                    builder.setTitle("Bildirimler için izin gerekli");
 
-                    // Metni ayarlayın
                     builder.setMessage("Uygulamanın arka planda bildirim göndermesi için lütfen batarya optimizsyonunu kapatın!");
 
-                    // Butonu ayarlayın
                     builder.setPositiveButton("Tamam", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             Intent intent = new Intent();
@@ -164,7 +158,6 @@ public class AddTransferActivity extends AppCompatActivity {
                         }
                     });
 
-                    // Dialog'u oluştur ve göster
                     AlertDialog dialog = builder.create();
                     dialog.show();
 
@@ -184,31 +177,24 @@ public class AddTransferActivity extends AppCompatActivity {
 
                     String transferDatee = transferDateView.getText().toString();
 
-                    // Check if name or surname field is empty
                     if (TextUtils.isEmpty(name) || TextUtils.isEmpty(surname)) {
-                        // If either is empty, skip creating and adding the transfer.
                         Toast.makeText(AddTransferActivity.this, "Ad ve Soyad Kısımları Boş!", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-                    // Create a new transfer with these values
                     Transfer newTransfer = new Transfer(name, surname, phoneNumber, transferDate, nameSurname, transferLocation, transferPrice, activeImageName);
 
-                    // Add the transfer to the database
                     db = new DatabaseHelper(AddTransferActivity.this);
                     if (db.doesDateExist(transferDate)) {
-                        // If the date exists, show an alert dialog
                         AlertDialog.Builder builder = new AlertDialog.Builder(AddTransferActivity.this);
                         builder.setTitle("Tarih Zaten Var");
                         builder.setMessage("Bu tarih zaten veritabanında var!");
                         builder.setPositiveButton("Yine de Ekle", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // Close the dialog and add the transfer anyway
                                 db.addTransfer(newTransfer);
 
                                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-                                // The time at which the notification should occur
                                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                                 Date date = null;
                                 try {
@@ -234,7 +220,6 @@ public class AddTransferActivity extends AppCompatActivity {
                                 }
 
 
-                                // Return to the main screen
                                 Intent mainIntent = new Intent(AddTransferActivity.this, MainScreenActivity.class);
                                 AddTransferActivity.this.startActivity(mainIntent);
                             }
@@ -242,7 +227,6 @@ public class AddTransferActivity extends AppCompatActivity {
                         builder.setNegativeButton("İptal", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // Close the dialog and cancel the transfer
                                 dialog.cancel();
                             }
                         });
@@ -250,15 +234,10 @@ public class AddTransferActivity extends AppCompatActivity {
 
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                        return; // Return early to prevent the rest of the onClick code from executing
+                        return;
                     }
-
-
                     db.addTransfer(newTransfer);
-
                     AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-                    // The time at which the notification should occur
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                     Date date = null;
                     try {
@@ -283,8 +262,6 @@ public class AddTransferActivity extends AppCompatActivity {
                         }
                     }
 
-
-                    // Return to the main screen
                     Intent mainIntent = new Intent(AddTransferActivity.this, MainScreenActivity.class);
                     AddTransferActivity.this.startActivity(mainIntent);
                     finish();
@@ -302,7 +279,7 @@ public class AddTransferActivity extends AppCompatActivity {
                 String packageName = getPackageName();
                 return !powerManager.isIgnoringBatteryOptimizations(packageName);
             } else {
-                return false; // Android 6.0 (Marshmallow) ve öncesinde pil optimizasyonları atlanmış olarak kabul edilir
+                return false;
             }
         }
         return false;

@@ -36,17 +36,14 @@ public class MainScreenActivity extends AppCompatActivity {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Kanal oluşturulduktan sonra izin isteği göster
             NotificationHelper notificationHelper = new NotificationHelper(this);
             if (!notificationHelper.areNotificationsEnabled()) {
-                // Bildirim izni yok, izin isteği göster
                 Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
                         .putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName())
                         .putExtra(Settings.EXTRA_CHANNEL_ID, NotificationHelper.CHANNEL_ID);
                 startActivity(intent);
             }
         } else {
-            // Android 7.0 (API 24) ve öncesinde bildirim izni otomatik olarak veriliyor
         }
 
         Window window = getWindow();
@@ -55,8 +52,6 @@ public class MainScreenActivity extends AppCompatActivity {
         DatabaseHelper db = new DatabaseHelper(MainScreenActivity.this);
         List<Transfer> transfers = db.getAllTransfers();
         transferAdapter = new TransferAdapter(transfers);
-
-        // RecyclerView'ı ve Adapter'ı set et
         recyclerView = findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -127,12 +122,10 @@ public class MainScreenActivity extends AppCompatActivity {
                         DatabaseHelper db = new DatabaseHelper(MainScreenActivity.this);
                         List<Transfer> transfers = db.searchTransfers(query);
 
-                        // Burada RecyclerView Adapter'ınızı yeni transfer listesi ile güncelleyin.
                         transferAdapter = new TransferAdapter(transfers);
                         recyclerView.setAdapter(transferAdapter);
-                        dialogSearch.dismiss(); // Dialogu kapat
+                        dialogSearch.dismiss();
                     } else {
-                        // Arama kutusu boş olduğunda bir hata mesajı gösterir.
                         searchEditText.setError("Arama için bir girdi girin.");
                     }
                 }
@@ -167,11 +160,9 @@ public class MainScreenActivity extends AppCompatActivity {
                 int position = viewHolder.getAdapterPosition();
                 Transfer deletedTransfer = transferAdapter.getTransfer(position);
 
-                // Veritabanından silme işlemi
                 DatabaseHelper db = new DatabaseHelper(MainScreenActivity.this);
                 db.deleteTransfer(deletedTransfer);
 
-                // RecyclerView'dan silme işlemi
                 transferAdapter.removeTransfer(position);
             }
         }).attachToRecyclerView(recyclerView);
